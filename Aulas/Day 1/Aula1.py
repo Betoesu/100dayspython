@@ -1,5 +1,6 @@
 # print and imput, they are both functions
-print("Hello World" + " " + "Bye World") # The + can bring together two different strings (a string its basically everything that will appear in " ")
+print("Hello World" + " " + "Bye World") # The + can bring together two different strings (a string its basically everything that will appear in quotes(""))
+# Concatenation its the name
 input("Whats your name? ") 
 print("Hello " + input("What is your name? ") + "!") # The insider parentheses will always happen first
 
