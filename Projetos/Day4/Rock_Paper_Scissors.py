@@ -51,3 +51,4 @@ elif person_random == "2" and computer_random == 0:
     print("You lose")
 elif person_random == "2" and computer_random == 1:
     print("You win")
+input("Press any button to finish")
