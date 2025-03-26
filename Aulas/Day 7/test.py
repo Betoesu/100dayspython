@@ -1,4 +1,5 @@
-import random
-list = ["eu", "voce", "eles"]
-numero = len(list)
-print(list[numero - 1])
+if guess == chosen_word[letter]:
+        print("Right\n")
+        
+    else:
+        print("Wrong\n")
