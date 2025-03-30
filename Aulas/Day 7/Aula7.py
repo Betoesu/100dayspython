@@ -1,33 +1,43 @@
 import random
 
-word = ["alfa" , "beta", "charlie"]
+def tem_item_repetido(lista):
+    return len(lista) != len(set(lista))
+
+
+
+
+word = ["alfa"]
 
 chosen_word = random.choice(word)
 print(chosen_word)
 blank = []
 chosen_word_list = list(chosen_word)
-x = 1
-
-guess = str.lower(input("Guess a letter: "))
 for letter in range (0,len(chosen_word)):
     blank.append ("_")
-    if guess == chosen_word[letter]:
-        del blank[letter]
-        blank.append(guess)
-contador = 0
-
-        
-
-
-
-
-
-
 
 blank = "".join(blank)
 print(blank)
+blank = list(blank)
 
+guess = str.lower(input("Guess a letter: "))
 
+backcup_chosen_word_list = chosen_word_list.copy()
+while guess in chosen_word_list:
+    posicao = chosen_word_list.index(guess)
+    del blank[posicao]
+    blank.insert(posicao, guess)
+    lista = chosen_word_list
+    if tem_item_repetido(lista) == True:
+        del chosen_word_list[posicao]
+        posicao = chosen_word_list.index(guess)
+        posicao_2 = len(chosen_word_list) - posicao
+        posicao = posicao + posicao_2
+        del blank [posicao]
+        blank.insert(posicao, guess)
+    chosen_word_list = backcup_chosen_word_list
+    print(blank)
+    guess = str.lower(input("Guess a letter: "))
+    
 
 
 
