@@ -1,22 +1,55 @@
 import random
 
-word = ["alfa" , "beta", "charlie"]
+word = ["alfa", "beta", "charlie"]
 
 chosen_word = random.choice(word)
 print(chosen_word)
 blank = []
 chosen_word_list = list(chosen_word)
-x = 1
-
-guess = str.lower(input("Guess a letter: "))
 for letter in range (0,len(chosen_word)):
     blank.append ("_")
-    if guess == chosen_word[letter]:
-        del blank[letter]
-        blank.append(guess)
-contador = 0
 
-        
+blank = "".join(blank)
+print(blank)
+blank = list(blank)
+
+guess = input("Guess a letter: ").lower()
+
+backcup_chosen_word_list = deepcopy(chosen_word_list)
+
+while guess in chosen_word_list:
+    if "_"  in blank:
+        posicao = chosen_word_list.index(guess)
+        del blank[posicao]
+        blank.insert(posicao, guess)
+        if "_"  in blank:
+    
+            if chosen_word_list.count(guess) > 1:
+                del chosen_word_list[posicao]
+                posicao = chosen_word_list.index(guess)
+                posicao_2 = len(chosen_word_list) - posicao
+                posicao = posicao + posicao_2
+                del blank [posicao]
+                blank.insert(posicao, guess)
+            chosen_word_list = backcup_chosen_word_list
+            print(blank)
+            guess = (input("Guess a letter: ")).lower()
+        else:
+            print("You win")
+    else:
+        print("You win")
+    
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,49 +1,133 @@
 import random
+stages = ['''   
+      _______
+     |/      |
+     |      
+     |      
+     |       
+     |      
+     |
+     |___ ''',''' 
+      _______
+     |/      |
+     |      (_)
+     |      
+     |       
+     |      
+     |
+     |___''', ''' 
+      _______
+     |/      |
+     |      (_)
+     |       |
+     |       |
+     |      
+     |
+     |___''', '''
+      _______
+     |/      |
+     |      (_)
+     |      \|
+     |       |
+     |      
+     |
+     |___ ''', '''
+     _______
+     |/      |
+     |      (_)
+     |      \|/
+     |       |
+     |      
+     |
+     |___ ''', '''
+      _______
+     |/      |
+     |      (_)
+     |      \|/
+     |       |
+     |      / 
+     |
+     |___ ''', ''' 
+      _______
+     |/      |
+     |      (_)
+     |      \|/
+     |       |
+     |      / \
+     |
+     |___''']
 
-def tem_item_repetido(lista):
-    return len(lista) != len(set(lista))
 
+word = ["Phoenix","Jett","Reyna","Raze","Yoru",'Neon',"Iso", "Brimstone", "Viper", "Omen", "Astra", "Harbor", "Clove", "Breach", "Sova", "Skye", "KAYO", "Fade", "Gekko", "Sage", "Cypher", "Killjoy", "Chamber", "Deadlock", "Vyse","Classic", "Shorty", "Frenzy", "Ghost", "Sheriff", "Stinger", "Spectre", "Bucky", "Judge", "Bulldog", "Guardian", "Phantom", "Vandal", "Marshal", "Operator", "Ares", "Odin","Bind", "Haven", "Split", "Ascent", "Icebox", "Breeze", "Fracture", "Pearl", "Lotus", "Sunset","Saqueadora","Sentinelas da Luz","Glitchpop", "Ion", "Champions", "Sentinelas da Luz", "Prime","Oni", "Netuno", "Vingança de Gaia","RGX"   ]
 
-
-
-word = ["alfa"]
-
+print("--------------------WELCOME TO THE VALORANT--------------------")
+print(''' _                                             
+| |                                            
+| |__   __ _ _ __   __ _ _ __ ___   __ _ _ __  
+| '_ \ / _` | '_ \ / _` | '_ ` _ \ / _` | '_ \ 
+| | | | (_| | | | | (_| | | | | | | (_| | | | |
+|_| |_|\__,_|_| |_|\__, |_| |_| |_|\__,_|_| |_|
+                    __/ |                      
+                   |___/                       ''')
 chosen_word = random.choice(word)
-print(chosen_word)
-blank = []
-chosen_word_list = list(chosen_word)
-for letter in range (0,len(chosen_word)):
-    blank.append ("_")
 
-blank = "".join(blank)
+blank = ""
+
+for spaces in chosen_word:
+    blank += "_"
+print("")
 print(blank)
-blank = list(blank)
 
-guess = str.lower(input("Guess a letter: "))
+game_over = False
 
-backcup_chosen_word_list = chosen_word_list.copy()
-while guess in chosen_word_list:
-    posicao = chosen_word_list.index(guess)
-    del blank[posicao]
-    blank.insert(posicao, guess)
-    lista = chosen_word_list
-    if tem_item_repetido(lista) == True:
-        del chosen_word_list[posicao]
-        posicao = chosen_word_list.index(guess)
-        posicao_2 = len(chosen_word_list) - posicao
-        posicao = posicao + posicao_2
-        del blank [posicao]
-        blank.insert(posicao, guess)
-    chosen_word_list = backcup_chosen_word_list
-    print(blank)
-    guess = str.lower(input("Guess a letter: "))
+mistakes = 0
+
+correct_letter = []
+guesses_already_made = []
+
+while game_over == False:
+    
+    guess = input("Guess a letter: ").lower()
+    if guess in guesses_already_made:
+        print("You Already guess the letter", guess)
+        continue
+
+
+    display = ""
+
+    for letter in chosen_word:
+        if guess == letter:
+            display += guess  
+            correct_letter.append(guess)
+             
+        elif letter in correct_letter:
+            display += letter
+
+        else: 
+            display += "_" 
+
+    guesses_already_made.append(guess)
+
+    print(display)
+
+    if guess not in chosen_word:
+            mistakes += 1
+            print(f"You guessed {guess}, that is not in the word. You lose a life")
+            print("")
+            print(f"**********************{6 - mistakes}/6 LIVES LEFT**********************")
+            print(stages[mistakes])
+            input("Press Enter to Continue")
+            
+
     
 
+    if "_" not in display:
+        print("*****You win*****")
+        game_over = True
+    
+    elif mistakes == 6:
+         print("*****You lose*****")
+         game_over = True
 
-
-
-
-
-
-
+    
 

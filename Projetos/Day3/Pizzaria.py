@@ -27,4 +27,4 @@ elif size == "L":
             bill += 1   
 else:
     print("You typed the wrongs inputs")    
-print(f"Your final bill is {bill}")
+print(f"Your final bill is R$4{bill}")

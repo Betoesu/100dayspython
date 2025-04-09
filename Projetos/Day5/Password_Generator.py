@@ -17,7 +17,7 @@ for caracter in range (0, n_n):
 for caracter in range (0, n_s):
 	password_list += random.choice(symbols)
 random.shuffle(password_list)
-print(password_list)
+
 
 password = ""
 for caracter in password_list:
