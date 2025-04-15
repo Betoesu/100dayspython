@@ -1,11 +1,16 @@
 def encrypt(message): 
     crypt_message = ""
     for letter in message:
+
         if letter == " ":
             crypt_message += " "
         else:  
             position = alphabet.index(letter)
-            letter = alphabet[position + number]
+            position_number = position + number
+            if position_number > 25:
+                position_number -= 25
+
+            letter = alphabet[position_number]
             crypt_message += letter
     print(crypt_message)
 
@@ -17,12 +22,12 @@ alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"
 
 decode_or_encode = input("Type 'encode' to encrypt, type 'decode' to decrypt: ").lower()
 if decode_or_encode == "encode":
-    message = input("Type your message: ")
+    message = input("Type your message: ").lower()
     number = int(input("Type your shift number: "))
      #
 
 elif decode_or_encode == "decode":
-    message = input("Type your message: ")
+    message = input("Type your message: ").lower()
     number = int(input("Type your shift number: "))
     #
 
