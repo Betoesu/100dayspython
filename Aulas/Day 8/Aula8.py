@@ -35,4 +35,3 @@ life_in_weeks(input("How old are you? "))
 calculate_love_score("Kanye West", "Kim Kardashian")
     
     
-    
