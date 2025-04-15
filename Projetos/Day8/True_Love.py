@@ -1,13 +1,3 @@
-def greet_me (name):
-    print("Hello ", name)
-    print("I see you, ", name)
-    print("Whaha ", name)
-
-def life_in_weeks(age):
-    age = 90 - int(age)
-    weeks = int(age) * 52
-    print(f"You have {weeks} weeks left.")
-
 def calculate_love_score(name_1, name_2):
     true = 0
     love = 0
@@ -25,14 +15,5 @@ def calculate_love_score(name_1, name_2):
 
     print(str(true) + str(love))
 
-
-greet_me("Pedro")
-
-life_in_weeks(input("How old are you? "))
-
-
-
-calculate_love_score("Kanye West", "Kim Kardashian")
-    
-    
+calculate_love_score(input("Name 1: "), input("Name 2: "))
     
