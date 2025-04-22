@@ -1,5 +1,7 @@
-def encrypt(message): 
+def encrypt(message,number): 
     crypt_message = ""
+    if decode_or_encode == "decode":
+        number *= -1
     for letter in message:
 
         if letter == " ":
@@ -37,22 +39,18 @@ keep_going = True
 
 while keep_going == True:
     decode_or_encode = input("Type 'encode' to encrypt, type 'decode' to decrypt: ").lower()
-    if decode_or_encode == "encode":
+    if (decode_or_encode == "encode") or (decode_or_encode == "decode"):
         message = input("Type your message: ").lower()
         number = int(input("Type your shift number: "))
-        encrypt(message)
+        encrypt(message,number)
 
-    elif decode_or_encode == "decode":
-        message = input("Type your message: ").lower()
-        number = int(input("Type your shift number: "))
-        decrypt(message)
-
+    
     else:
         print("")
-        input('''You type the worng command.      
-    Type Enter to go again: ''')
+        print('''You type the wrong command.''')
         print("")
-    
+        
+
     errou_miseravel = False
     while errou_miseravel == False:
         chose = input("Type 'yes' if you want to go again. Otherwise type 'no'. ").lower()
@@ -62,6 +60,4 @@ while keep_going == True:
         elif chose == "yes":
             errou_miseravel = True
         else:
-            input("You type the wrong answer. Press Enter to Try Again: ")
-            
-
+            print("You type the wrong command.")
