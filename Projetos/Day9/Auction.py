@@ -16,9 +16,14 @@ print(r'''                         ___________
 print("Bem vindo ao Leilão Secreto")
 mais_compradores = True
 while True:
-    nome = input("Digite seu Nome: ")
+    nome = input("Digite seu Nome: ").lower()
     valor = input("Quanto quer pagar: ")
-    lances[nome] = int(valor)
+    
+    if nome in lances:
+        nome =  nome +  " " + input("Já tem uma pessoa com esse nome. Coloque seu Sobrenome: ").lower()
+        lances[nome] = int(valor)
+    else:
+        lances[nome] = int(valor)
     
     
 
@@ -47,6 +52,8 @@ for nome_lance in lances:
     else:
         lance_anterior = lances[nome_lance]
         continue
+
+vencedor = vencedor.title()
         
 print(f"O vencedor é {vencedor} com o lance de R$ {maior_lance} ")
     
