@@ -1,3 +1,4 @@
+
 def solicitar_operador():
     print('''Escolha a Operação
 +
@@ -13,12 +14,12 @@ def solicitar_operador():
 
 
 
-n1 = int(input("Digite seu primeiro número: "))
-n2 = int(input("Digite seu segundo número: "))
+n1 = float(input("Digite seu primeiro número: "))
+n2 = float(input("Digite seu segundo número: "))
 
 simbolo = solicitar_operador()
 
-if solicitar_operador() == "+":
+if simbolo == "+":
     resultado = n1 + n2
 
 elif simbolo == "-":
@@ -31,13 +32,13 @@ elif simbolo == "/":
     resultado = n1 / n2
 
 
-print(resultado)
+print(f"{resultado:,}")
 
 continuar = input("Quer continuar calculando com esse resultado? ").lower()
 
 while continuar in ["sim", "ss", "s", "yes"]:
     n1 = resultado
-    n2 = int(input("Digite seu número: "))
+    n2 = float(input("Digite seu número: "))
     simbolo = solicitar_operador()
 
 
@@ -50,13 +51,12 @@ while continuar in ["sim", "ss", "s", "yes"]:
     elif simbolo == "/":
         resultado = n1 / n2
 
-    print(resultado)
+    print(f"{resultado:_}")
     continuar = input("Quer continuar calculando com esse resultado? ").lower()
 
-print(f"Esse é seu resultado final: {resultado}")
+print(f"Esse é seu resultado final: {resultado:,}")
 
 
     
 
 
-        
