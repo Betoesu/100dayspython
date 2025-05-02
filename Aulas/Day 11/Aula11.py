@@ -35,6 +35,9 @@ def wrong_type(escolha):
         escolha = input("Type 'y' to get another card, type 'n' to pass: " ).lower()
     return escolha
 
+def As(deck):
+    while sum(deck) > 21 and 11 in deck:
+        deck[deck.index(11)] = 1
 
 cards = [11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
 
@@ -44,7 +47,13 @@ for _ in range(2):
     index =  random.randint(0,len(cards) - 1)
     player_card = cards.pop(index)
     player_deck.append(player_card)
-print(f"{player_deck} Your Cards")
+
+if player_deck[0] == 11:
+    print(f"[A, {player_deck[1]}]")
+elif player_deck[1] == 11:
+    print(f"[{player_deck[0]}, A]")
+else:
+    print(f"{player_deck} Your Cards")
 
 
 dealer_deck = []
@@ -53,10 +62,21 @@ for _ in range(2):
     dealer_card = cards.pop(index)
     dealer_deck.append(dealer_card)
 
-print(F"[{dealer_deck[0]}, ?] Dealer Cards")
+if dealer_deck[0] == 11:
+    print(f"[A, ?]")
+else:
+    print(F"[{dealer_deck[0]}, ?] Dealer Cards")
+
+
+
+pontos_player = player_deck[0] + player_deck[1]
+As(player_deck)
 pontos_player = player_deck[0] + player_deck[1]
 
 
+
+pontos_dealer = dealer_deck[0] + dealer_deck[1]
+As(dealer_deck)
 pontos_dealer = dealer_deck[0] + dealer_deck[1]
 
 
@@ -65,7 +85,7 @@ if pontos_player == 21:
     print("BLACKJACK!!!")
     show_decks(reveal_dealer=True)
     print(" ")
-    who_wins()  
+    who_wins(pontos_player,pontos_dealer)  
     exit()      
 
 
@@ -80,6 +100,8 @@ if escolha == "n":
     while pontos_dealer < pontos_player:
         new_card = take_card(dealer_deck,cards)
         pontos_dealer += new_card
+        As(dealer_deck)
+        pontos_dealer = sum(dealer_deck)
 
         print("Dealer get another card\n")
         show_decks(reveal_dealer=True)
@@ -88,8 +110,12 @@ if escolha == "n":
     
 
 elif escolha == "y":
-    new_card = take_card(player_deck, cards)   
+    new_card = take_card(player_deck, cards)
     pontos_player += new_card
+    As(player_deck)
+    pontos_player = sum(player_deck)
+
+
     while pontos_player < 21:
         show_decks()
         escolha = input("Digite 'y' para pegar outra carta, digite 'n' para parar: " ).lower()
@@ -103,6 +129,8 @@ elif escolha == "y":
             while pontos_dealer < pontos_player:
                 new_card = take_card(dealer_deck,cards)
                 pontos_dealer += new_card
+                As(dealer_deck)
+                pontos_dealer = sum(dealer_deck)
 
                 print("Dealer get another card\n")
                 show_decks(reveal_dealer=True)
@@ -112,10 +140,13 @@ elif escolha == "y":
             
             
         elif escolha == "y":
-            new_card = take_card(player_deck, cards)   
+            new_card = take_card(player_deck, cards)
             pontos_player += new_card
+            As(player_deck)
+            pontos_player = sum(player_deck)
 
     if pontos_player > 21:
         show_decks(reveal_dealer=True)
         print("You Bust")
         print(who_wins(pontos_player,pontos_dealer))
+
