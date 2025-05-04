@@ -81,7 +81,7 @@ pontos_dealer = dealer_deck[0] + dealer_deck[1]
 
 
 if pontos_player == 21:
-    input(" ")
+    print(" ")
     print("BLACKJACK!!!")
     show_decks(reveal_dealer=True)
     print(" ")
