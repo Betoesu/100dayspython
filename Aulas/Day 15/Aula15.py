@@ -1,14 +1,22 @@
+
 import wrong_type
 def enough_resources(drink, menu, resources):
     ingredients = menu[drink]["ingredients"]
+    not_enough = False
     for item in ingredients:
         if ingredients[item] > resources[item]:
             print(f"Sorry There's Not Enough {item.title()}")
             not_enough = True
-            return not_enough
-            
-        elif ingredients[item] <= resources[item]:
-            return
+    return not_enough
+
+def make_coffe(drink, menu, resources):
+    ingredients = menu[drink]["ingredients"]
+    for item in ingredients:
+        resources[item] -= ingredients[item]
+    return resources
+
+
+
         
         
 
@@ -42,9 +50,9 @@ MENU = {
 }
 
 resources = {
-    "water": 3000,
-    "milk": 2000,
-    "coffee": 1000,
+    "water": 300,
+    "milk": 200,
+    "coffee": 100,
     "money": 0
 }
 
@@ -56,16 +64,23 @@ coins = {
     
 }
 
+
+
+
+# Início Código
 while True:
+    # Escolha do Drink
     coffe_type = input("What would you like? (espresso/latte/cappuccino): ").lower()
     coffe_type = wrong_type.wrong_type(coffe_type,["espresso", "latte", "cappuccino", "report", "off"], "What would you like? (espresso/latte/cappuccino): ", "english")
     
 
 
     if coffe_type in ["espresso", "latte", "cappuccino"]:
+        # Confere os recursos
         not_enough = enough_resources(coffe_type, MENU, resources)
-        cost_coffe = MENU[coffe_type]["cost"]
 
+        #Preço e Quantas moedas serão colocadas
+        cost_coffe = MENU[coffe_type]["cost"]
         if not_enough == True:
             continue
         print(f"${cost_coffe}")
@@ -77,21 +92,29 @@ while True:
         pennies_coin = float(input("How many pennies: "))
 
         total = quarters_coin * coins["quarters"] + dimes_coin * coins["dimes"] + nickles_coin * coins["nickles"] + pennies_coin * coins["pennies"]
+        change = total - cost_coffe
 
+        # Se Houve Troco ou se não houve dinheiro o suficiente
         if total < cost_coffe:
             print("Sorry that's not enough money. Money refunded.")
             continue
         elif total > cost_coffe:
-            change = total - cost_coffe
             print(f"Here is ${round(change,2)} in change.")
-            print(f"Enjoy your {coffe_type}")
+
+            resources = make_coffe(coffe_type, MENU, resources)
+
+            print(f"Enjoy your {coffe_type} ☕")
+
             resources["money"] += cost_coffe
-            print(resources)
+            
 
         else:
-            print(f"Enjoy your {coffe_type}")
+            resources = make_coffe(coffe_type, MENU, resources)
+
+            print(f"Enjoy your {coffe_type} ☕")
+        
             resources["money"] += cost_coffe
-            print(resources)
+            
     
 
 
