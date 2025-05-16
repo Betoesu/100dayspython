@@ -53,7 +53,7 @@ while answer == right_answer:
   right_type = ["a", "b"]
 
   #Função para evitar que o usuário digite o comando errado
-  answer = wrong_type.wrong_type(answer,right_type,question)
+  answer = wrong_type.wrong_type(answer,right_type,question,"english")
 
   if a["follower_count"] > b["follower_count"]:
       right_answer = "a"

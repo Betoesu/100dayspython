@@ -117,8 +117,6 @@ while True:
             
     
 
-
-        
     elif coffe_type == "report":
         print(resources)
     
