@@ -18,7 +18,7 @@ class Snake():
         for position in STARTIG_POSITIONS:
             self.adding_segments(position)
     
-    def adding_segments(self):
+    def adding_segments(self,position):
         new_segments = Turtle("square")
         new_segments.color("green")
         new_segments.penup()
@@ -26,11 +26,7 @@ class Snake():
         self.segments.append(new_segments)
     
     def extend(self):
-        self.adding_segments()
-
-
-        
-    
+        self.adding_segments(self.segments[-1].position())
 
     def auto_move(self):
             for seg in range(len(self.segments) - 1, 0,-1):

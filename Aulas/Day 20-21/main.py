@@ -28,13 +28,17 @@ while game_is_on:
     
     if snake.head.distance(apple) < 15:
         apple.refresh()
-        snake.adding_segments()
+        snake.extend()
         scoreboard.increse_score()
         
-    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() < -280 or snake.head.ycor() > 280:
+    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
         game_is_on = False 
         scoreboard.game_over()
 
+    for segment in snake.segments[1:]:
+        if snake.head.distance(segment) < 10:
+            game_is_on = False
+            scoreboard.game_over()
 
 
 screen.exitonclick()
