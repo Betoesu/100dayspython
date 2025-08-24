@@ -26,6 +26,26 @@ def save():
 
     with open(caminho, "a") as file:
         file.write(f"{websiteApp} | {emailUsuario} | {senha}\n")
+    
+    #O 0 representa o primeiro caractere e o END o ultimo
+    emailInput.delete(0, END)
+    passwordInput.delete(0,END)
+    websiteInput.delete(0,END)
+
+    #Volta o foco para o primeiro campo
+    websiteInput.focus()
+
+def focus_email(event):
+    emailInput.focus()
+
+def focus_password(event):
+    passwordInput.focus()
+
+def save_on_enter(event):
+    save()
+
+
+
 
     
 
@@ -53,16 +73,31 @@ passwordLabel = Label(text="Senha:",pady=5, font=FONT)
 passwordLabel.grid(row=3,column=0,sticky="e")
 
 #Espaços de Input
+
+#Website
 websiteInput = Entry(width=35)
 websiteInput.grid(row=1,column=1,columnspan=2,sticky="w")
 websiteInput.focus()
 
+#Faz com que ao apertar Enter va para o proximo campo
+websiteInput.bind("<Return>", focus_email)
+
+
+
+#Email
 emailInput = Entry(width=35)
 emailInput.grid(row=2,column=1,columnspan=2,sticky="w")
 
+#Faz com que ao apertar Enter va para o proximo campo
+emailInput.bind("<Return>",focus_password)
 
+
+#Senha
 passwordInput = Entry(width=35)
 passwordInput.grid(row=3,column=1,sticky="w") 
+
+#Salva e funciona como o botao de adicionar
+passwordInput.bind("<Return>", save_on_enter)
 
 
 #Botões
