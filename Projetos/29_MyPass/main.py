@@ -1,55 +1,7 @@
-# FileNotFoundError
-
-# with open ("a_file.txt") as file:
-#     file.read()
-
-# KeyError
-
-# dictionary = {"key": "value"}
-# value = dictionary["non_existent_key"]
-
-# IndexError
-
-# fruitList = ["banana","Apple","Pineaple"]
-# fruit = fruitList[3]
-
-#TypeError
-
-# text = "abc"
-# print(text + 5)
-
-
-#FileNotFoundErros
-
-# try:
-#     file = open("file.txt")
-#     dictionary = {"key":"value"}
-#     print(dictionary["key"])
-# except FileNotFoundError:
-#     file = open("file.txt","w")
-#     file.write("Something")
-# except KeyError as errorMessage:
-#     print(f"That Key {errorMessage} does not exist")
-# else:
-#     content = file.read()
-#     print(content)
-# finally:
-#     file.close()
-
-# height = float(input("Height: "))
-# weight = int(input("Weight: "))
-
-# bmi = weight/height ** 2
-# if height > 3:
-#     raise ValueError("Human Height Should not exceed 3 meters")
-# print(bmi)
-
-
 from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip #Salvar algo no ctrl + c
-import json
 
 FONT = ("Arial",12)
 
@@ -83,41 +35,43 @@ def generate_password():
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 def save():
-
     websiteApp = websiteInput.get()
     emailUsuario = emailInput.get()
     senha = passwordInput.get()
-    new_data = {
-        websiteApp: {
-        "email": emailUsuario,
-        "password":senha,
-    }
-    }
 
     #Pop Up para preencher todos os campos
     if  len(websiteApp) == 0 or len(emailUsuario) == 0 or len(emailUsuario) == 0:
         messagebox.showinfo(title="Ops", message="Tenha certeza que não deixou nenhum campo em branco")
 
     else:
-        caminho = "./Aulas/Day 30/senhas.json"
-        with open(caminho, "r") as file:
-            #Lendo dados antigos
-            data = json.load(file)
 
-            #Adicionando novos dados com os dados antigos
-            data.update(new_data)
+    #Pop Up de confirmação
+        confirmacaoPopUp = messagebox.askokcancel(title=websiteApp,message=f"São essas informações que você deseja salvar: \nEmail/Usuário: {emailUsuario}\n Senha: {senha}")
 
-        with open(caminho,"w") as file:
-            #Salvando os dados adicionais
-            json.dump(data, file, indent=4)
-         
-        #O 0 representa o primeiro caractere e o END o ultimo
-        emailInput.delete(0, END)
-        passwordInput.delete(0,END)
-        websiteInput.delete(0,END)
+        if confirmacaoPopUp:
+            caminho = "./Aulas/Day 29/senhas.txt"
 
-        #Volta o foco para o primeiro campo
-        websiteInput.focus()
+            #Verifica se há um arquivo já criado
+            try:
+                with open(caminho,"r") as f:
+                    conteudo = f.read().strip()
+            except FileNotFoundError:
+                conteudo = ""
+
+            if not conteudo: # o not funciona pra ver se a variavel ta vazia
+                with open(caminho, "a") as f:
+                    f.write("WEBSITE/APP | EMAIL/USUARIO | SENHA\n")
+
+            with open(caminho, "a") as file:
+                file.write(f"{websiteApp} | {emailUsuario} | {senha}\n")
+            
+            #O 0 representa o primeiro caractere e o END o ultimo
+            emailInput.delete(0, END)
+            passwordInput.delete(0,END)
+            websiteInput.delete(0,END)
+
+            #Volta o foco para o primeiro campo
+            websiteInput.focus()
 
 def focus_email(event):
     emailInput.focus()

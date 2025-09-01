@@ -1,13 +1,20 @@
 import pandas
+
 natoData = pandas.read_csv("./Projetos/26_NATO_Alphabet/nato_phonetic_alphabet.csv")
 
 #Aqui eu pego a linha das letras e do codigo do documento
-natoAlphabet = {row.letter:row.code for (index,row) in natoData.iterrows()}
-print(natoAlphabet)
+natoAlphabetDict = {row.letter:row.code for (index,row) in natoData.iterrows()}
+print(natoAlphabetDict)
 
-word = input("Enter a word: ").replace(" ","").upper()
-wordList = list(word)
-#pego a letra e procuro no dicionario
-wordNato = [natoAlphabet[letter] for(letter) in wordList]
-print(wordNato)
- 
+def generate_phonetic():
+    word = input("Enter a word: ").replace(" ","").upper()
+    try:
+        #pego a letra e procuro no dicionario
+        wordNato = [natoAlphabetDict[letter] for(letter) in word]
+    except KeyError:
+        print("Sorry, only letters in the alphabet please.")
+        generate_phonetic()
+    else:
+        print(wordNato)
+
+generate_phonetic()
