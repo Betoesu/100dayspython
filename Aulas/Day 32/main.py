@@ -31,5 +31,4 @@ caminhoFrases = "./Aulas/Day 32/quotes.txt"
 with open(caminhoFrases,mode="r") as frases:
         
         frase = frases.read()
-        print(frase).strip()
-        
+        print(frase)
