@@ -15,11 +15,18 @@ import random
 import pandas as pd
 import smtplib
 
-caminhoBirthdays = "./Projetos/32_Birthday_Wisher/birthdays.csv"
+CAMINHO_ARQUIVO_ANIVERSARIANTE = "./Projetos/32_Birthday_Wisher/birthdays.csv"
 
-hoje = dt.datetime.now()
-tuplaHoje = (hoje.month,hoje.day)
+data_de_hoje = dt.datetime.now()
+mes_e_dia_de_hoje = (data_de_hoje.month,data_de_hoje.day)
 
-dadosAniversario = pd.read_csv(caminhoBirthdays)
+dados_aniversariantes = pd.read_csv(CAMINHO_ARQUIVO_ANIVERSARIANTE)
+aniversarios_por_data = {(linha["month"], linha["day"]): linha for _,linha in dados_aniversariantes.iterrows()}
 
-dicionarioAniversario = 
+print(aniversarios_por_data)
+# if mes_e_dia_de_hoje in aniversarios_por_data:
+#     caminho_carta_aleatoria = f"./Projetos/32_Birthday_Wisher/letter_templates/letter_{random.randint(1,3)}.txt"
+#     with open(caminho_carta_aleatoria) as carta:
+#         mensagem = carta.read()
+#         mensagem.replace("[NAME]",dados_aniversariantes[])
+print(mes_e_dia_de_hoje[1])
