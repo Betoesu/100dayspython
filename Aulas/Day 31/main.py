@@ -12,6 +12,7 @@ try:
 except FileNotFoundError:
    frasesArquivoOriginal = pandas.read_csv("./Aulas/Day 31/data/English_Phrases.csv")
    listFrases = frasesArquivoOriginal.to_dict(orient="records")
+  
 else:
     listFrases = frases.to_dict(orient="records") 
 

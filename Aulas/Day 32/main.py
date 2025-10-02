@@ -5,6 +5,7 @@
 
 # with smtplib.SMTP("smtp.gmail.com",port=587) as connection:
 
+      #Criptografa a mensagem do email
 #     connection.starttls()
 
 #     connection.login(user=my_email, password=password)
@@ -25,10 +26,25 @@
 # print(dateBirth)
 
 import pandas as pd
+import random
+import datetime as dt
+import smtplib
+
+myEmail = "p07692063@gmail.com"
+password = "gucnvqnohjkgogfa"
 
 caminhoFrases = "./Aulas/Day 32/quotes.txt"
-
 with open(caminhoFrases,mode="r") as frases:
-        
-        frase = frases.read()
-        print(frase)
+        frases = frases.readlines()
+        fraseDoDia = random.choice(frases)
+      
+now = dt.datetime.now()
+todayWeek = now.weekday() 
+
+if todayWeek == 1: 
+        with smtplib.SMTP("smtp.gmail.com",port=587) as connection:
+
+                connection.starttls()
+                
+                connection.login(user=myEmail, password=password)
+                connection.sendmail(from_addr=myEmail,to_addrs="p07692063@yahoo.com",msg="Subject:Frase do dia\n\n" f"{fraseDoDia}")
