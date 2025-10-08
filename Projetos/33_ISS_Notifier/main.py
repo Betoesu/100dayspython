@@ -36,13 +36,13 @@ def IsDark():
     data = response_sun.json()
     sunrise = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
     sunset = int(data["results"]["sunset"].split("T")[1].split(":")[0])
-    input("")
+    
 
     time_now = datetime.now()
     hour_now = time_now.hour
 
 
-    if hour_now >= sunset and hour_now < sunrise:
+    if hour_now >= sunset and hour_now <= sunrise:
         return True
     else:
         return False
@@ -50,7 +50,7 @@ def IsDark():
 while True:
     time.sleep(60)
     if IsDark() and IsCloseToMe():
-
+        print("Message send")
         connection = smtplib.SMTP("smtp.gmail.com",port=587)
         connection.starttls()
         connection.login(user=MEU_EMAIL,password=MINHA_SENHA)

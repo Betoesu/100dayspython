@@ -9,12 +9,12 @@ listFrases = {}
 
 try:
     frases = pandas.read_csv("./Aulas/Day 31/data/words_to_learn.csv")
-except FileNotFoundError:
+except:
    frasesArquivoOriginal = pandas.read_csv("./Aulas/Day 31/data/English_Phrases.csv")
    listFrases = frasesArquivoOriginal.to_dict(orient="records")
   
 else:
-    listFrases = frases.to_dict(orient="records") 
+    listFrases = frases.to_dict(orient="records") #orient="records" faz retornar uma lista
 
 
 
