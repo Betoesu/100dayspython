@@ -16,7 +16,7 @@ class QuizInterface:
         self.tela.config(padx=20,pady=20, background=THEME_COLOR)
 
         #Score
-        self.texto_score = Label(text="Score: 0", fg="white", background=THEME_COLOR)
+        self.texto_score = Label(text=f"Score: {self.quiz.score}", fg="white", background=THEME_COLOR)
         self.texto_score.grid(row=0, column=1)
         
         #Canva
@@ -51,8 +51,15 @@ class QuizInterface:
 
 
     def get_next_question(self):
-        pergunta = self.quiz.next_question()
-        self.canvas.itemconfig(self.texto_pergunta, text=pergunta)
+        if self.quiz.still_has_questions():
+            self.canvas.config(bg="white")
+            pergunta = self.quiz.next_question()
+            self.canvas.itemconfig(self.texto_pergunta, text=pergunta)
+        else:
+            self.canvas.config(bg="white")
+            self.canvas.itemconfig(self.texto_pergunta, text=f"You've completed the quiz\n Your final score was: {self.quiz.score}/{self.quiz.question_number}")
+            self.botao_verdadeiro.config(state="disabled")
+            self.botao_falso.config(state="disabled")
 
     def resposta_verdadeiro(self):
         esta_certo = self.quiz.check_answer("True")
@@ -65,12 +72,11 @@ class QuizInterface:
 
     def give_feedback(self,esta_certo):
         if esta_certo == True:
-            self.tela.after(1000, self.turn_bg_green)
+            self.canvas.config(bg="green")
+            self.texto_score.config(text=f"Score: {self.quiz.score}")
         elif esta_certo == False:
-            self.tela.after(1000, self.turn_bg_red)
+            self.canvas.config(bg="red")
+        self.canvas.after(1000,self.get_next_question)
 
-    def turn_bg_green(self):
-        self.canvas.config(bg="red")
-    
-    def turn_bg_red(self):
-        self.canvas.config(bg="green")
+
+
