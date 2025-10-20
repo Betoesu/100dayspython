@@ -26,16 +26,16 @@ parametros = {
 resposta = requests.get(url=STOCK_ENDPOINT, params=parametros)
 stock_data = resposta.json()["Time Series (Daily)"] 
 data_list = [value for (key,value) in stock_data.items()]
-print(data_list)
+
 
 valor_ontem = data_list[0]
 valor_fechamento_ontem = valor_ontem["4. close"]
-print(valor_fechamento_ontem)
+
 
 
 valor_antes_de_ontem = data_list[1]
 valor_fechamento_antes_de_ontem = valor_ontem["4. close"]
-print(valor_fechamento_antes_de_ontem)
+
 
 diferenca = (float(valor_fechamento_ontem) - float(valor_fechamento_antes_de_ontem))
 
@@ -49,7 +49,7 @@ diferenca_percentual = round(diferenca/float(valor_fechamento_ontem),4) * 100
     
     
     
-if abs (diferenca_percentual) >= 0:
+if abs (diferenca_percentual) >= 5:
     parametros_news = {
         "q": COMPANY_NAME,
         "apiKey": "a7e93189a43846c590e193785592ba56",
@@ -66,7 +66,6 @@ if abs (diferenca_percentual) >= 0:
     for article in formatted_articles:
         if len(article) > 150:
             article = article[:150 - 3] + "..."
-        print(len(article))
         message = client.messages.create(
                 body=article,
                 from_="+12293049667",
