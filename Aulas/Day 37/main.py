@@ -37,15 +37,28 @@ parametros_do_grafico = {
 # print(resposta.text)
 
 pixel_url = f"{pixela_url}/{USERNAME}/graphs/{ID}"
-
-today = datetime(year=2025,month=10,day=12)
+today = datetime.now()
 
 
 parametros_pixel = {
     "date": today.strftime("%Y%m%d"),
-    "quantity": "120",
+    "quantity": input("Quanto tempo teve de exercício físico hoje? "),
 }
 
 
-# resposta = requests.post(url=pixel_url, json=parametros_pixel, headers=headers )
+resposta = requests.post(url=pixel_url, json=parametros_pixel, headers=headers )
+print(resposta.text)
+
+update_pixel_url = f"{pixela_url}/{USERNAME}/graphs/{ID}/{parametros_pixel['date']}"
+
+
+new_pixel_update = {
+    "quantity": "140"
+}
+# resposta = requests.put(url=update_pixel_url, json=new_pixel_update, headers=headers)
+# print(resposta.text)
+
+delete_pixel_url = f"{pixela_url}/{USERNAME}/graphs/{ID}/{parametros_pixel['date']}"
+
+# resposta = requests.delete(url=delete_pixel_url, headers=headers)
 # print(resposta.text)
