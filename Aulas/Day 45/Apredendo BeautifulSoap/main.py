@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 
-with open("./Aulas/Day 45/website.html") as html_file:
+with open("./Aulas/Day 45/Apredendo BeautifulSoap/website.html") as html_file:
     contents = html_file.read()
    
 #Guarda o código HTML
@@ -30,6 +30,6 @@ heading = soup.find(name="h1",id="name")
 section_heading = soup.find(name="h3", class_="heading")
 # print(section_heading)
 
-print(soup.select_one(selector="p a"))
+# print(soup.select_one(selector="p a"))
 
-print(soup.select(".heading"))
+# print(soup.select(".heading"))
