@@ -4,6 +4,7 @@ import requests
 endpoint = "https://news.ycombinator.com/news"
 response = requests.get(endpoint)
 yc_webpage = response.text
+print(yc_webpage)
 
 soup = BeautifulSoup(yc_webpage,"html.parser")
 
