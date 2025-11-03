@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from time import sleep
+from time import sleep,time
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_experimental_option("detach",True)
@@ -16,16 +16,27 @@ select_language.click()
 
 sleep(2)
 
-available_list = driver.find_elements(By.CSS_SELECTOR, value="div[id='products']")
-del available_list[0]
-for n in available_list:
-    print(n.text)
-
 cookie = driver.find_element(By.CSS_SELECTOR,"div button")
+
+#Timers
+wait_time = 5
+timeout = time() + wait_time
+
+
 while True:
     cookie.click()
-    available_list = driver.find_elements(By.CSS_SELECTOR, value="div[id='products']")
-    for n in available_list:
-        print(n.text)
-
     
+    if time() > timeout:
+
+        products = driver.find_elements(By.CSS_SELECTOR,value="div[id^='product']") #Procuro todos os produtos 
+        
+
+        best_item = None
+        for product  in reversed(products): #Coloco os produtos de forma reversa, ou seja do mais caro para o mais barato
+
+            #Verifico se existe a palavra enabled na classe do product
+
+            if "enabled" in product.get_attribute("class"):
+                best_item = product
+                break
+        
