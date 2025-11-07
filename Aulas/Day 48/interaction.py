@@ -16,4 +16,4 @@ driver.get("https://en.wikipedia.org/wiki/Main_Page")
 
 search = driver.find_element(By.NAME,value="search")
 
-search.send_keys("Jesus",Keys.ENTER) 
+search.send_keys("Computador",Keys.ENTER) 
