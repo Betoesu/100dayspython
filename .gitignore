@@ -25,5 +25,8 @@ logs/
 .DS_Store
 Thumbs.db
 
-# Arquivos sensíveis
+# Arquivos sensï¿½veis
 Senhas.txt
+
+#Ignorar perfil do Chrome
+chrome_profile/
