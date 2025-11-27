@@ -8,6 +8,7 @@ ACCOUNT_EMAIL = "pedro@test.com"
 ACCOUNT_PASSWORD = "teste123teste"
 GYM_URL = "https://appbrewery.github.io/gym/"
 
+
 chrome_options = webdriver.ChromeOptions()
 
 chrome_options.add_experimental_option("detach", True)
@@ -20,23 +21,28 @@ driver = webdriver.Chrome(options=chrome_options)
 # Navigate to site
 driver.get(GYM_URL)
 
-
 wait = WebDriverWait(driver,2)
 
-login_botton =  wait.until(ec.element_to_be_clickable((By.ID,"login-button")))
-login_botton.click()
+
+def retry(func, retries, description):
+    pass
+
+def Login():
+    login_botton =  wait.until(ec.element_to_be_clickable((By.ID,"login-button")))
+    login_botton.click()
 
 
-email_input = wait.until(ec.presence_of_element_located((By.ID,"email-input")))
-email_input.send_keys(ACCOUNT_EMAIL)
+    email_input = wait.until(ec.presence_of_element_located((By.ID,"email-input")))
+    email_input.send_keys(ACCOUNT_EMAIL)
 
 
-password_input = wait.until(ec.presence_of_element_located((By.ID,"password-input")))
-password_input.send_keys(ACCOUNT_PASSWORD)
+    password_input = wait.until(ec.presence_of_element_located((By.ID,"password-input")))
+    password_input.send_keys(ACCOUNT_PASSWORD)
 
 
-submit_button = driver.find_element(by=By.ID,value="submit-button")
-submit_button.click()
+    submit_button = driver.find_element(by=By.ID,value="submit-button")
+    submit_button.click()
+
 
 
 schedule_page = wait.until(ec.presence_of_element_located((By.ID, "schedule-page")))
@@ -86,25 +92,42 @@ for card in class_cards:
                 print(f"✓ Joined waitlist for: {class_info}")
                 joined_waitlists += 1
                 processed_classes.append(f"[New Waitlist] {class_info}")
-                
+                        
+total_booked = already_booked_or_waitlisted + booked_classes + joined_waitlists
+print(f"\n--- Total Tuesday/Thursday 6pm classes: {total_booked} ---")
+print("\n--- VERIFYING ON MY BOOKINGS PAGE ---")
+
 my_bookings_nav = driver.find_element(By.XPATH, "//*[@id='my-bookings-link']")
 my_bookings_nav.click()
-            
-            
-
-    
 
 
 
 
-# print("\n--- BOOKING SUMMARY ---")
-# print(f"Classes booked: {booked_classes}")
-# print(f"WaitLists Joined: {joined_waitlists}")
-# print(f"Already booked/waitlisted: {already_booked_or_waitlisted}")
-# print(f"Total Tuesday and Thursday 6pm classes processed: {booked_classes + joined_waitlists + already_booked_or_waitlisted}")
+wait.until(ec.presence_of_element_located((By.ID, "my-bookings-page")))
 
-# print("\n--- DETAILED CLASS LIST ---")
-# for class_detail in processed_classes:
-#     print(f"  • {class_detail}")
+verified_count = 0
+
+all_cards = driver.find_elements(By.CSS_SELECTOR, "div[id*='card-']")
+
+for card in all_cards:
+    try:
+        when_paragraph = card.find_element(By.XPATH, ".//p[strong[text()='When:']]")
+        when_text = when_paragraph.text
+        
+        if ("Tue" in when_text or "Thu" in when_text) and "6:00 PM" in when_text:
+            class_name = card.find_element(By.TAG_NAME, "h3").text
+            print(f"  ✓ Verified: {class_name}")
+            verified_count += 1
+    except "NoSuchElementException":
+        # Skip if no "When:" text found (not a booking card)
+        pass
 
 
+print(f"\n--- VERIFICATION RESULT ---")
+print(f"Expected: {total_booked} bookings")
+print(f"Found: {verified_count} bookings")
+
+if total_booked == verified_count:
+    print("✅ SUCCESS: All bookings verified!")
+else:
+    print(f"❌ MISMATCH: Missing {verified_count - total_booked} bookings")
