@@ -38,8 +38,12 @@ class InstaFollower:
             username = self.wait.until(EC.element_to_be_clickable((By.NAME,"username")))
             username.send_keys(USERNAME)
 
+            time.sleep(2)
+
             password = self.driver.find_element(By.NAME, value="password")
             password.send_keys(PASSWORD)
+
+            time.sleep(2)
 
             submit_button = self.driver.find_element(By.XPATH, value='//*[@id="loginForm"]/div[1]/div[3]/button')
             submit_button.click()
@@ -54,8 +58,12 @@ class InstaFollower:
             username = self.wait.until(EC.element_to_be_clickable((By.NAME,"email")))
             username.send_keys(USERNAME)
 
+            time.sleep(2)
+
             password = self.driver.find_element(By.NAME, value="pass")
             password.send_keys(PASSWORD)
+
+            time.sleep(2)
 
             submit_button = self.driver.find_element(By.XPATH, value='//*[@id="login_form"]/div/div[1]/div/div[3]/div/div/div/div[1]/div/span/span')
             submit_button.click()
@@ -69,21 +77,8 @@ class InstaFollower:
             salvar_info_button = self.wait.until(EC.element_to_be_clickable((By.XPATH,"//div[contains(text(), 'Agora não')]")))
             salvar_info_button.click()
 
-
-
-
-
-        #Tempo para carregar sem erro
-        time.sleep(3)
-
-
-
-
-
-
-
-
     def find_followers(self):
+        time.sleep(5)
 
         #Clica em pesquisar
         pesquisa_button = self.driver.find_element(By.XPATH,'//*[@aria-label="Pesquisa"]')
@@ -109,29 +104,41 @@ class InstaFollower:
         seguidores = self.wait.until(EC.element_to_be_clickable((By.XPATH, '//a[@href="/vinlandsaga_official/followers/"]')))
         seguidores.click()
 
-       
-
-        time.sleep(5)
-        modal_xpath = "/html/body/div[5]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]"
-        modal = self.wait.until(EC.presence_of_element_located((By.XPATH, modal_xpath)))
-        for n_account in range(2,10):
-                xpath = f'//div[@role="dialog"]/div/div[2]/div/div/div[3]/div[1]/div/div[{n_account}]/div/div/div/div[3]/div/button'
-                follow_button = self.wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
-                follow_button.click()
-                time.sleep(2)
-
-                botão_seguido_ou_solicitado = self.driver.find_element(By.XPATH,f'//div[@role="dialog"]/div/div[2]/div/div/div[3]/div[1]/div/div[{n_account}]/div/div/div/div[3]/div/button/div/div')
-                seguido_ou_solicitado = botão_seguido_ou_solicitado.text
-
-
-                if seguido_ou_solicitado == "Seguindo" or seguido_ou_solicitado == "Solicitado":
-                    #Maneira com JavaScript de scrollar a tela
-                    self.driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", modal)
-
 
 
 
 
 
     def follow(self):
-        pass
+        modal_xpath = "/html/body/div[5]/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]"
+
+        for _ in range(10):
+            try:
+                modal = self.wait.until(
+                    EC.presence_of_element_located((By.XPATH, modal_xpath))
+                )
+
+                self.driver.execute_script(
+                    "arguments[0].scrollTop = arguments[0].scrollHeight",
+                    modal
+                )
+
+                time.sleep(5)
+
+            except StaleElementReferenceException:
+                continue
+
+
+
+            all_follow_button = self.driver.find_elements(By.XPATH,'//div[@role="dialog"]/div/div[2]/div/div/div[3]/div[1]/div//*[text()="Seguir"]')
+
+            for follow_button in all_follow_button:                
+
+                try:
+                    follow_button.click()
+                    time.sleep(8)
+
+                except (ElementClickInterceptedException, StaleElementReferenceException):
+                    continue
+
+                   
