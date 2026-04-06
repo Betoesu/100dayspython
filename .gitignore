@@ -30,3 +30,7 @@ Senhas.txt
 
 #Ignorar perfil do Chrome
 chrome_profile/
+
+#Ignorar arquivos secundarios
+Arquivos_Secundários/
+

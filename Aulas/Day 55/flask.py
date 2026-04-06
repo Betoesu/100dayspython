@@ -17,7 +17,12 @@ def make_underline(func):
 
 def make_paragraph(func):
     def wrapper_function():
-        return "<u>" + func() + "</u>"
+        return "<p>" + func() + "</p>"
+    return wrapper_function
+
+def make_h1_title(func):
+    def wrapper_function():
+        return "<h1>" + func() + "</h1>"
     return wrapper_function
 
 app = Flask(__name__)
